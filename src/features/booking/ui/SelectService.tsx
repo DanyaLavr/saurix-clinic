@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useBookingStore from "../store/store";
 import { IServiceWithNumberPrice } from "@/types/doctors";
 import { IToNextStep } from "../types/props";
+import Loader from "@/src/shared/ui/Loader";
 
 const SelectService = ({ toNextStep }: IToNextStep) => {
   const [services, setServices] = useState<IServiceWithNumberPrice[]>([]);
@@ -26,7 +27,7 @@ const SelectService = ({ toNextStep }: IToNextStep) => {
     });
   }, [selectedDoctor?.id]);
 
-  if (isLoading) return <div className="p-4 text-gray-500">Loading...</div>;
+  if (isLoading) return <Loader className="justify-self-center" />;
   if (!services.length)
     return <div className="p-4 text-gray-500">No services</div>;
 
