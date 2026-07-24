@@ -16,5 +16,8 @@ export interface IServiceWithNumberPrice {
   price: number;
   isActive: boolean;
 }
-
+export interface ISlot {
+  date: Date;
+  isAvailable: boolean;
+}
 export type TFreeBusy = calendar_v3.Schema$TimePeriod;
