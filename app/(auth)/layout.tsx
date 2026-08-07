@@ -3,6 +3,8 @@ import SlidingBar from "@/src/shared/ui/SlidingBar";
 import { TabContent } from "@/types/auth";
 import { ROUTES } from "@/src/shared/config/routes";
 import GoogleButton from "@/src/shared/ui/GoogleButton";
+import { Suspense } from "react";
+import Loader from "@/src/shared/ui/Loader";
 
 export const metadata: Metadata = {
   title: {
@@ -44,7 +46,9 @@ export default function AuthLayout({
           <span className="text-xs text-gray-400">или</span>
           <div className="h-px flex-1 bg-gray-200" />
         </div>
-        <GoogleButton />
+        <Suspense fallback={<Loader />}>
+          <GoogleButton />
+        </Suspense>
       </section>
     </main>
   );

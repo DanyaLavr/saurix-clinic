@@ -18,18 +18,6 @@ const createBookingEvent = async ({
   endTime,
 }: IProps) => {
   try {
-    // const auth = new google.auth.JWT({
-    //   email: process.env.GOOGLE_CLIENT_EMAIL,
-    //   key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    //   scopes: ["https://www.googleapis.com/auth/calendar"],
-    //   subject: doctorEmail,
-    // });
-
-    // const calendar = google.calendar({
-    //   version: "v3",
-    //   auth,
-    // });
-
     const { calendar, calendarId } = await getDoctorCalendar(doctorId);
     const response = await calendar.events.insert({
       calendarId: calendarId,
