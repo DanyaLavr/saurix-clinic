@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/src/lib/prisma";
-const getDoctors = async () => {
+import { IDoctor } from "@/types/doctors";
+const getDoctors = async (): Promise<IDoctor[]> => {
   return await prisma.doctor.findMany();
 };
 

@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import ConnectCalendarButton from "@/src/entities/doctors/ui/ConnectCalendarButton";
 import { authConfig } from "@/src/shared/config/authConfig";
 
+export const dynamic = "force-dynamic";
+
 export default async function DoctorPage() {
   const session = await getServerSession(authConfig);
 
