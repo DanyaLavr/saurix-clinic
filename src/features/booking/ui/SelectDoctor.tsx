@@ -54,12 +54,14 @@ const SelectDoctor = ({ initialDoctors, toNextStep }: IProps) => {
             </label>
           </Fragment>
         ))}
-        <button
-          type="submit"
-          className="mt-4 w-full py-3 bg-amber-800 text-amber-50 rounded-lg font-medium hover:bg-amber-900 transition-colors"
-        >
-          Select Doctor
-        </button>
+        {selectedDoctor && (
+          <button
+            type="submit"
+            className="mt-4 w-full py-3 bg-amber-800 text-amber-50 rounded-lg font-medium hover:bg-amber-900 transition-colors col-span-full"
+          >
+            Select Doctor
+          </button>
+        )}
       </form>
     </div>
   );

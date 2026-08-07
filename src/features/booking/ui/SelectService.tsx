@@ -1,6 +1,5 @@
 "use client";
 import getDoctorService from "@/src/entities/doctors/module/getDoctorService";
-import { useEffect, useState } from "react";
 import useBookingStore from "../store/store";
 import { IServiceWithNumberPrice } from "@/types/doctors";
 import { IToNextStep } from "../types/props";

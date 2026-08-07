@@ -1,3 +1,10 @@
+import RegisterForm from "@/src/features/auth/register/ui/RegisterForm";
+import { Suspense } from "react";
+
 export default function Register() {
-  return <div className=""></div>;
+  return (
+    <Suspense>
+      <RegisterForm />
+    </Suspense>
+  );
 }

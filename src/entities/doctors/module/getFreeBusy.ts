@@ -1,10 +1,11 @@
-import calendar from "@/src/lib/calendar/calendarGeneration";
+import getDoctorCalendar from "./getDoctorCalendar";
 interface IProps {
   timeMin: Date;
   timeMax: Date;
-  calendarId: string;
+  doctorId: string;
 }
-const getFreeBusy = async ({ timeMin, timeMax, calendarId }: IProps) => {
+const getFreeBusy = async ({ timeMin, timeMax, doctorId }: IProps) => {
+  const { calendar, calendarId } = await getDoctorCalendar(doctorId);
   const { data } = await calendar.freebusy.query({
     requestBody: {
       timeMin: timeMin.toISOString(),

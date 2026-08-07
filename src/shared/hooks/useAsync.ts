@@ -19,7 +19,9 @@ export function useAsync<T>(
       .catch((err) => {
         if (err.name !== "AbortError") setError(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
 
     return () => controller.abort();
   }, deps);

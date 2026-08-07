@@ -2,6 +2,7 @@ import getFreeBusy from "@/src/entities/doctors/module/getFreeBusy";
 import generateFreeSlots from "@/src/features/booking/modules/generateFreeSlots";
 import generateSlots from "@/src/features/booking/modules/generateSlots";
 import prisma from "@/src/lib/prisma";
+import { NextResponse } from "next/server";
 
 const CALENDAR_ID =
   "6ea787ab25d3e536487dae353f743761d00c740b576c5bfe304b5228992a8a32@group.calendar.google.com";
@@ -12,19 +13,28 @@ export async function GET(req: Request) {
   const doctorId = searchParams.get("doctorId");
 
   if (!date) {
-    return Response.json({ error: "month is required" }, { status: 400 });
+    return NextResponse.json({ error: "month is required" }, { status: 400 });
   }
   if (!serviceId) {
-    return Response.json({ error: "service id is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "service id is required" },
+      { status: 400 },
+    );
   }
   if (!doctorId) {
-    return Response.json({ error: "doctor id is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "doctor id is required" },
+      { status: 400 },
+    );
   }
 
   const service = await prisma.service.findUnique({ where: { id: serviceId } });
 
   if (!service) {
-    return Response.json({ error: "servise is not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "servise is not found" },
+      { status: 404 },
+    );
   }
 
   const [year, dataMonth, day] = date.split("-").map(Number);
@@ -33,12 +43,12 @@ export async function GET(req: Request) {
   const workSchedule = await prisma.workSchedule.findFirst({
     where: {
       doctorId,
-      dayOfWeek: dayOfWeek === 0 ? 6 : dayOfWeek - 1,
+      dayOfWeek,
     },
   });
-  console.log("workSchedule :>> ", workSchedule);
+
   if (!workSchedule) {
-    return Response.json(
+    return NextResponse.json(
       { error: "work schedule is not found" },
       { status: 404 },
     );
@@ -57,11 +67,11 @@ export async function GET(req: Request) {
     freeBusy = await getFreeBusy({
       timeMin: workStart,
       timeMax: workEnd,
-      calendarId: CALENDAR_ID,
+      doctorId: doctorId,
     });
   } catch (err) {
     console.error("Google Calendar API error:", err);
-    return Response.json(
+    return NextResponse.json(
       { error: "failed to fetch calendar data" },
       { status: 502 },
     );
@@ -69,18 +79,9 @@ export async function GET(req: Request) {
 
   const busyPeriods = freeBusy ?? [];
 
-  // const freeSlots = generateFreeSlots({
-  //   workStart,
-  //   workEnd,
-  //   busyPeriods,
-  //   slotDuration: serviceDuration,
-  // });
-  // console.log("freeSlots :>> ", freeSlots);
-  // console.log("busyPeriods :>> ", busyPeriods);
-  // return Response.json(busyPeriods);
   const slots = generateSlots(workStart, workEnd, serviceDurationMs);
-  return Response.json(
+
+  return NextResponse.json(
     generateFreeSlots({ slots, freebusy: busyPeriods, serviceDurationMs }),
   );
-  // return Response.json(freeSlots);
 }

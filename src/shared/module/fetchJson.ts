@@ -4,7 +4,6 @@ export async function fetchJson<T>(
   fallbackOn404?: T,
 ): Promise<T> {
   const res = await fetch(url, { signal });
-
   if (res.status === 404 && fallbackOn404 !== undefined) {
     return fallbackOn404;
   }

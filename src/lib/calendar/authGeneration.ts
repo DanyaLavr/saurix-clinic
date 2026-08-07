@@ -1,13 +1,13 @@
+import "server-only";
 import { google } from "googleapis";
 
-const key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-const email = process.env.GOOGLE_CLIENT_EMAIL;
-const calendarAuth = new google.auth.GoogleAuth({
-  credentials: {
-    client_email: email,
-    private_key: key,
-  },
-  scopes: ["https://www.googleapis.com/auth/calendar"],
-});
+const getCalendarAuthForDoctor = (token: string) => {
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_AUTH_CLIENT_ID,
+    process.env.GOOGLE_AUTH_SECRET,
+  );
 
-export default calendarAuth;
+  oauth2Client.setCredentials({ refresh_token: token });
+  return oauth2Client;
+};
+export default getCalendarAuthForDoctor;

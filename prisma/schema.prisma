@@ -7,17 +7,35 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
 model Doctor {
-  id          String   @id @default(uuid())
-  name        String
-  specialty   String
-  email       String   @unique
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
+  id        String   @id @default(uuid())
+  name      String
+  specialty String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user User?
+
+  googleCalendar DoctorCalendar?
 
   services  DoctorService[]
   schedules WorkSchedule[]
   bookings  Booking[]
+}
+
+model DoctorCalendar {
+  id           String @id @default(uuid())
+  calendarId   String
+  refreshToken String
+  doctorId     String @unique
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 }
 
 model Service {
@@ -54,29 +72,43 @@ model WorkSchedule {
 model Patient {
   id        String   @id @default(uuid())
   name      String
-  email     String
   phone     String?
   createdAt DateTime @default(now())
+
+  user User?
 
   bookings Booking[]
 }
 
 model Booking {
-  id        String   @id @default(uuid())
-  doctorId  String
-  serviceId String
-  patientId String
-  startsAt  DateTime
-  endsAt    DateTime
-  status    String   @default("CONFIRMED")
-  notes     String?
-  createdAt DateTime @default(now())
+  id            String        @id @default(uuid())
+  doctorId      String
+  serviceId     String
+  patientId     String
+  startsAt      DateTime
+  endsAt        DateTime
+  status        BookingStatus @default(CONFIRMED)
+  paymentMethod PaymentMethod
+  notes         String?
+  createdAt     DateTime      @default(now())
 
-  doctor    Doctor    @relation(fields: [doctorId], references: [id])
-  service   Service   @relation(fields: [serviceId], references: [id])
-  patient   Patient   @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
 
   @@index([doctorId, startsAt])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  SUCCESS
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
 }
 
 model Notification {
@@ -85,4 +117,19 @@ model Notification {
   channel   String
   status    String
   sentAt    DateTime?
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String?
+  role     Role    @default(PATIENT)
+
+  doctorId String? @unique
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  patientId String?  @unique
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  createdAt DateTime @default(now())
 }

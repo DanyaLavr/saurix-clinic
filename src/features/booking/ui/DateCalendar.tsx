@@ -27,7 +27,7 @@ const DateCalendar = ({ today, month, year }: IProps) => {
   };
   const isDayOff = (day: number): boolean => {
     if (!workSchedule) return false;
-    const weekday = (new Date(year, month, day).getDay() + 6) % 7;
+    const weekday = new Date(year, month, day).getDay();
     return !workSchedule.some((elem: any) => elem.dayOfWeek === weekday);
   };
   const minBookableDate = useMemo(() => {

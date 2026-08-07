@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import useBookingStore from "../store/store";
 import Loader from "@/src/shared/ui/Loader";
 import { useAsync } from "@/src/shared/hooks/useAsync";
@@ -12,10 +11,13 @@ const TimeSlotPicker = () => {
   const selectedService = useBookingStore((state) => state.selectedService);
   const selectedSlot = useBookingStore((state) => state.selectedSlot);
   const setSelectedSlot = useBookingStore((state) => state.setSelectedSlot);
-  // const [slots, setSlots] = useState<{ date: Date; isAvailable: boolean }[]>( [],);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(false);
-  if (!selectedDate || !selectedDoctor?.id || !selectedService?.id) return;
+
+  if (!selectedDoctor?.id)
+    return <div className="p-4 text-gray-500">Спочатку оберіть лікара</div>;
+  if (!selectedService?.id)
+    return <div className="p-4 text-gray-500">Спочатку оберіть процедуру</div>;
+  if (!selectedDate)
+    return <div className="p-4 text-gray-500">Спочатку оберіть день</div>;
 
   const {
     data: slots,
@@ -26,39 +28,11 @@ const TimeSlotPicker = () => {
       fetchJson<ISlot[]>(
         `/api/get-doctor-day-slots?date=${selectedDate}&serviceId=${selectedService?.id}&doctorId=${selectedDoctor?.id}`,
         signal,
+
         [],
       ),
     [selectedDate, selectedDoctor?.id, selectedService?.id],
   );
-  // useEffect(() => {
-  //   if (!selectedDate || !selectedDoctor?.id || !selectedService?.id) return;
-
-  //   const controller = new AbortController();
-
-  //   const getTime = async () => {
-  //     setLoading(true);
-  //     setError(false);
-  //     try {
-  //       const res = await fetch(
-  //         `/api/get-doctor-day-slots?date=${selectedDate}&serviceId=${selectedService.id}&doctorId=${selectedDoctor.id}`,
-  //       );
-  //       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  //       const data = await res.json();
-  //       setSlots(data);
-  //     } catch (err) {
-  //       if ((err as Error).name !== "AbortError") {
-  //         console.error("Failed to fetch time slots:", err);
-  //         setError(true);
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   getTime();
-
-  //   return () => controller.abort();
-  // }, [selectedDate, selectedDoctor?.id, selectedService?.id]);
 
   return (
     <div className="flex-1 grid grid-cols-3 gap-2">

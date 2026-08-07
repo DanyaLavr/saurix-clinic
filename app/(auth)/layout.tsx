@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "../globals.css";
 import SlidingBar from "@/src/shared/ui/SlidingBar";
 import { TabContent } from "@/types/auth";
 import { ROUTES } from "@/src/shared/config/routes";
+import GoogleButton from "@/src/shared/ui/GoogleButton";
 
 export const metadata: Metadata = {
   title: {
@@ -25,24 +25,27 @@ const register: TabContent = {
   text: "Register",
   path: ROUTES.register,
 };
+
 export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="min-h-full flex flex-col">
-        <main className="min-h-screen bg-amber-50">
-          <div className="max-w-2xl mx-auto px-4 py-10">
-            <button>Back</button>
-          </div>
-          <section className="max-w-2xl mx-auto px-4 py-10 bg-white border border-amber-100 rounded-2xl p-6 shadow-sm">
-            <SlidingBar leftContent={login} rightContent={register} />
-            {children}
-          </section>
-        </main>
-      </body>
-    </html>
+    <main className="min-h-screen bg-amber-50">
+      <div className="max-w-2xl mx-auto px-4 py-10">
+        <button>Back</button>
+      </div>
+      <section className="max-w-2xl mx-auto px-4 py-10 bg-white border border-amber-100 rounded-2xl p-6 shadow-sm">
+        <SlidingBar leftContent={login} rightContent={register} />
+        {children}
+        <div className="flex items-center gap-3 my-3">
+          <div className="h-px flex-1 bg-gray-200" />
+          <span className="text-xs text-gray-400">или</span>
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+        <GoogleButton />
+      </section>
+    </main>
   );
 }

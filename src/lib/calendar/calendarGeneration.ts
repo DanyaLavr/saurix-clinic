@@ -1,6 +1,11 @@
+import "server-only";
 import { google } from "googleapis";
-import calendarAuth from "./authGeneration";
+import getCalendarAuthForDoctor from "./authGeneration";
 
-const calendar = google.calendar({ version: "v3", auth: calendarAuth });
+const getCalendar = (token: string) =>
+  google.calendar({
+    version: "v3",
+    auth: getCalendarAuthForDoctor(token),
+  });
 
-export default calendar;
+export default getCalendar;

@@ -10,7 +10,6 @@ const DateItem = ({
   date,
   setSelectedDate,
 }: IProps) => {
-  console.log(date, isDisabled);
   return (
     <button
       disabled={isDisabled}

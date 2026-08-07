@@ -4,8 +4,15 @@ export interface IDoctor {
   id: string;
   name: string;
   specialty: string;
-  email: string;
   isActive: boolean;
+}
+
+export interface IUser {
+  id: string;
+  email: string;
+  role: "ADMIN" | "DOCTOR" | "PATIENT";
+  doctorId?: string;
+  patientId?: string;
 }
 
 export interface IServiceWithNumberPrice {
