@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@layer components {
+  /* Заполненная кнопка — только цвет/состояния, паддинги/rounded/gap пишешь сам */
+  .btn-primary {
+    @apply bg-amber-800 text-amber-50 font-semibold transition-colors cursor-pointer hover:bg-amber-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2;
+  }
+
+  /* Контурная кнопка на светлом фоне */
+  .btn-secondary {
+    @apply border border-stone-300 text-stone-700 font-medium transition-colors cursor-pointer hover:border-stone-400 hover:text-stone-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2;
+  }
+
+  /* Белая кнопка с рамкой (соцпровайдеры и т.п.) */
+  .btn-outline {
+    @apply border border-gray-300 bg-white text-gray-700 font-medium shadow-sm cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Едва заметная кнопка-действие */
+  .btn-ghost {
+    @apply text-stone-500 font-medium transition-colors cursor-pointer hover:bg-stone-100 hover:text-stone-900;
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

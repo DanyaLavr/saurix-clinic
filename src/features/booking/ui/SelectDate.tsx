@@ -86,9 +86,9 @@ const SelectDate = ({ toNextStep }: IToNextStep) => {
       </div>
       {selectedDate && selectedSlot && (
         <button
-          onClick={() => router.push("/payment")}
+          onClick={() => router.push("/submit")}
           type="submit"
-          className="mt-4 w-full py-3 bg-amber-800 text-amber-50 rounded-lg font-medium hover:bg-amber-900 transition-colors"
+          className="btn-primary w-full rounded-lg py-3 mt-4"
         >
           Continue
         </button>

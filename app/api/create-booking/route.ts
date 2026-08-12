@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  const { doctorId, serviceId, startsAt, paymentMethod } = parsed.data;
+  const { doctorId, serviceId, startsAt } = parsed.data;
   const currentUser = await prisma.user.findUnique({
     where: { id: session.user.id },
   });
@@ -78,8 +78,7 @@ export async function POST(req: Request) {
       patientId: currentUser.patientId!,
       startsAt: start,
       endsAt: end,
-      paymentMethod,
-      status: paymentMethod === "CASH" ? "CONFIRMED" : "PENDING",
+      status: "CONFIRMED",
     },
   });
 

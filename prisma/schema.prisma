@@ -88,7 +88,6 @@ model Booking {
   startsAt      DateTime
   endsAt        DateTime
   status        BookingStatus @default(CONFIRMED)
-  paymentMethod PaymentMethod
   notes         String?
   createdAt     DateTime      @default(now())
 
@@ -103,13 +102,9 @@ enum BookingStatus {
   PENDING
   CONFIRMED
   CANCELLED
-  SUCCESS
+  
 }
 
-enum PaymentMethod {
-  CASH
-  CARD
-}
 
 model Notification {
   id        String    @id @default(uuid())

@@ -2,7 +2,7 @@ interface IProps {
   title: string;
   data: string;
 }
-const PaymentListItem = ({ title, data }: IProps) => {
+const SubmitListItem = ({ title, data }: IProps) => {
   return (
     <div className="flex justify-between items-center border-b border-gray-100 pb-3">
       <span className="text-gray-500 text-sm">{title}</span>
@@ -11,4 +11,4 @@ const PaymentListItem = ({ title, data }: IProps) => {
   );
 };
 
-export default PaymentListItem;
+export default SubmitListItem;

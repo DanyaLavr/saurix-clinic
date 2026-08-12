@@ -7,7 +7,7 @@ import { useState } from "react";
 import SelectDate from "@/src/features/booking/ui/SelectDate";
 import Tips from "@/src/features/booking/ui/Tips";
 import { IDoctor } from "@/types/doctors";
-import { useRouter } from "next/navigation";
+import ClientBackButton from "@/src/shared/ui/ClientBackButton";
 
 const steps = ["Доктор", "Процедура", "Дата"];
 interface IProps {
@@ -15,11 +15,11 @@ interface IProps {
 }
 const BookingPageClient = ({ initialDoctors }: IProps) => {
   const [step, setStep] = useState(0);
-  const route = useRouter();
+
   return (
-    <main className="min-h-screen bg-amber-50">
+    <main className="flex-1 bg-amber-50">
       <section className="max-w-2xl mx-auto px-4 py-10">
-        <button onClick={() => route.back()}>{`<- Back`}</button>
+        <ClientBackButton />
         <div className="mb-8">
           <h1 className="text-2xl font-medium text-amber-900">
             Запись к врачу

@@ -10,7 +10,7 @@ const GoogleButton = () => {
   return (
     <button
       onClick={() => signIn("google", { callbackUrl })}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+      className="btn-outline flex w-full items-center justify-center gap-3 rounded-xl px-4 py-2.5 text-sm"
     >
       <svg className="h-5 w-5" viewBox="0 0 24 24">
         <path

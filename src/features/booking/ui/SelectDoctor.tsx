@@ -57,7 +57,7 @@ const SelectDoctor = ({ initialDoctors, toNextStep }: IProps) => {
         {selectedDoctor && (
           <button
             type="submit"
-            className="mt-4 w-full py-3 bg-amber-800 text-amber-50 rounded-lg font-medium hover:bg-amber-900 transition-colors col-span-full"
+            className="btn-primary w-full rounded-lg py-3 mt-4 col-span-full"
           >
             Select Doctor
           </button>

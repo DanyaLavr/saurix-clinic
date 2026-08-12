@@ -72,7 +72,7 @@ const SelectService = ({ toNextStep }: IToNextStep) => {
       {selectedService && (
         <button
           type="submit"
-          className="mt-4 w-full py-3 bg-amber-800 text-amber-50 rounded-lg font-medium hover:bg-amber-900 transition-colors"
+          className="btn-primary w-full rounded-lg py-3 mt-4"
         >
           Continue
         </button>
