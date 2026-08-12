@@ -6,6 +6,7 @@ import useBookingStore from "../store/store";
 import DateCalendar from "./DateCalendar";
 import TimeSlotPicker from "./TimeSlotPicker";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/src/shared/config/routes";
 
 const daysNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
@@ -86,7 +87,7 @@ const SelectDate = ({ toNextStep }: IToNextStep) => {
       </div>
       {selectedDate && selectedSlot && (
         <button
-          onClick={() => router.push("/submit")}
+          onClick={() => router.push(ROUTES.submit)}
           type="submit"
           className="btn-primary w-full rounded-lg py-3 mt-4"
         >
