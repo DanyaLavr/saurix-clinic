@@ -7,6 +7,7 @@ interface IBookingStore {
   setSelectedService: (service: IServiceWithNumberPrice | null) => void;
   selectedDate: string | null;
   setSelectedDate: (date: string) => void;
+  resetSelectedDate: () => void;
   selectedSlot: string | null;
   setSelectedSlot: (slot: string) => void;
   resetSelectedSlot: () => void;
@@ -20,6 +21,8 @@ const useBookingStore = create<IBookingStore>()((set) => ({
     set({ selectedService: service }),
   selectedDate: null,
   setSelectedDate: (date: string) => set({ selectedDate: date }),
+  resetSelectedDate: () => set({ selectedDate: null }),
+
   selectedSlot: null,
   setSelectedSlot: (slot: string) => set({ selectedSlot: slot }),
   resetSelectedSlot: () => set({ selectedSlot: null }),

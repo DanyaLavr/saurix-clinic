@@ -5,6 +5,7 @@ import { IServiceWithNumberPrice } from "@/types/doctors";
 import { IToNextStep } from "../types/props";
 import Loader from "@/src/shared/ui/Loader";
 import { useAsync } from "@/src/shared/hooks/useAsync";
+import { useEffect } from "react";
 
 const SelectService = ({ toNextStep }: IToNextStep) => {
   const selectedDoctor = useBookingStore((state) => state.selectedDoctor);
@@ -12,6 +13,8 @@ const SelectService = ({ toNextStep }: IToNextStep) => {
   const setSelectedService = useBookingStore(
     (state) => state.setSelectedService,
   );
+  const resetSelectedDate = useBookingStore((state) => state.resetSelectedDate);
+  const resetSelectedSlot = useBookingStore((state) => state.resetSelectedSlot);
   if (!selectedDoctor)
     return <div className="p-4 text-gray-500">Спочатку оберіть лікаря</div>;
   const {
@@ -22,6 +25,11 @@ const SelectService = ({ toNextStep }: IToNextStep) => {
     () => getDoctorService(selectedDoctor?.id),
     [selectedDoctor.id],
   );
+  useEffect(() => {
+    resetSelectedDate();
+    resetSelectedSlot();
+  }, []);
+
   if (loading) return <Loader className="justify-self-center" />;
   if (error)
     return <div className="p-4 text-red-600">Ошибка загрузки услуг</div>;

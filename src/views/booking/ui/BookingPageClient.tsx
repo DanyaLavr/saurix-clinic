@@ -15,7 +15,6 @@ interface IProps {
 }
 const BookingPageClient = ({ initialDoctors }: IProps) => {
   const [step, setStep] = useState(0);
-
   return (
     <main className="flex-1 bg-amber-50">
       <section className="max-w-2xl mx-auto px-4 py-10">
@@ -29,7 +28,11 @@ const BookingPageClient = ({ initialDoctors }: IProps) => {
           </p>
         </div>
 
-        <Stepper current={step} steps={steps} />
+        <Stepper
+          current={step}
+          steps={steps}
+          setStep={(step) => setStep(step)}
+        />
 
         <div className="bg-white border border-amber-100 rounded-2xl p-6 shadow-sm">
           <Tips step={step} setStep={setStep} />

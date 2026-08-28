@@ -1,5 +1,5 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import useBookingStore from "../store/store";
 import { IDoctor } from "@/types/doctors";
 import { IToNextStep } from "../types/props";
@@ -10,7 +10,16 @@ interface IProps extends IToNextStep {
 const SelectDoctor = ({ initialDoctors, toNextStep }: IProps) => {
   const selectedDoctor = useBookingStore((state) => state.selectedDoctor);
   const setSelectedDoctor = useBookingStore((state) => state.setSelectedDoctor);
-
+  const resetSelectedDate = useBookingStore((state) => state.resetSelectedDate);
+  const resetSelectedSlot = useBookingStore((state) => state.resetSelectedSlot);
+  const setSelectedService = useBookingStore(
+    (state) => state.setSelectedService,
+  );
+  useEffect(() => {
+    setSelectedService(null);
+    resetSelectedDate();
+    resetSelectedSlot();
+  }, []);
   return (
     <div className="grid gap-4">
       <input
