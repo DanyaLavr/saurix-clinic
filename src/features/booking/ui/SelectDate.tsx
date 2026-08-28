@@ -7,7 +7,7 @@ import DateCalendar from "./DateCalendar";
 import TimeSlotPicker from "./TimeSlotPicker";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/src/shared/config/routes";
-
+import Arrow from "@/src/shared/ui/icons/chevron.svg";
 const daysNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const SelectDate = ({ toNextStep }: IToNextStep) => {
@@ -56,18 +56,27 @@ const SelectDate = ({ toNextStep }: IToNextStep) => {
   //   getData();
   // }, [currentDate]);
   return (
-    <div>
-      <div className="flex gap-4">
-        <button onClick={prevMonth} disabled={isPrevDisabled}>
-          {`<`}
+    <div className="mt-8">
+      <div className="flex items-center gap-4 sm:w-[49%]">
+        <button
+          className="btn-ghost rounded-lg px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-20"
+          onClick={prevMonth}
+          disabled={isPrevDisabled}
+        >
+          <Arrow className="rotate-180" />
         </button>
-        <p>
+        <p className="flex-1 text-center capitalize ">
           {monthName} - {year}
         </p>
-        <button onClick={nextMonth}>{`>`}</button>
+        <button
+          onClick={nextMonth}
+          className="btn-ghost rounded-lg px-2.5 py-1.5"
+        >
+          <Arrow />
+        </button>
       </div>
 
-      <div className="grid gap-4 sm:flex">
+      <div className="grid gap-4 mt-3 sm:flex">
         <div className="flex-1">
           <div className="grid grid-cols-7 justify-items-center">
             {daysNames.map((elem, index) => (
