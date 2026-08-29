@@ -1,9 +1,7 @@
 "use client";
 import useBookingStore from "../store/store";
 import Loader from "@/src/shared/ui/Loader";
-import { useAsync } from "@/src/shared/hooks/useAsync";
-import { fetchJson } from "@/src/shared/module/fetchJson";
-import { ISlot } from "@/types/doctors";
+import useFreeSlotsQuery from "../hooks/useFreeSlotsQuery";
 
 const TimeSlotPicker = () => {
   const selectedDate = useBookingStore((state) => state.selectedDate);
@@ -21,22 +19,19 @@ const TimeSlotPicker = () => {
 
   const {
     data: slots,
-    loading,
+    isLoading,
     error,
-  } = useAsync<ISlot[]>(
-    (signal) =>
-      fetchJson<ISlot[]>(
-        `/api/get-doctor-day-slots?date=${selectedDate}&serviceId=${selectedService?.id}&doctorId=${selectedDoctor?.id}`,
-        signal,
-
-        [],
-      ),
-    [selectedDate, selectedDoctor?.id, selectedService?.id],
-  );
+  } = useFreeSlotsQuery({
+    date: selectedDate,
+    serviceId: selectedService.id,
+    doctorId: selectedDoctor.id,
+  });
 
   return (
     <div className="flex-1 grid grid-cols-3 gap-2">
-      {loading && <Loader className="col-span-3 justify-center self-center" />}
+      {isLoading && (
+        <Loader className="col-span-3 justify-center self-center" />
+      )}
       {error && (
         <p className="col-span-3 text-center self-center text-red-600 py-6">
           Не удалось загрузить время приёма
@@ -44,7 +39,7 @@ const TimeSlotPicker = () => {
       )}
       {!!slots &&
         !!slots.length &&
-        !loading &&
+        !isLoading &&
         !error &&
         slots.map((elem, i) => {
           const date = new Date(elem?.date);

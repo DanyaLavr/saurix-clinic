@@ -1,11 +1,9 @@
 "use client";
-import getDoctorService from "@/src/entities/doctors/module/getDoctorService";
 import useBookingStore from "../store/store";
-import { IServiceWithNumberPrice } from "@/types/doctors";
 import { IToNextStep } from "../types/props";
 import Loader from "@/src/shared/ui/Loader";
-import { useAsync } from "@/src/shared/hooks/useAsync";
 import { useEffect } from "react";
+import useServicesQuery from "@/src/entities/doctors/hooks/useServicesQuery";
 
 const SelectService = ({ toNextStep }: IToNextStep) => {
   const selectedDoctor = useBookingStore((state) => state.selectedDoctor);
@@ -19,22 +17,19 @@ const SelectService = ({ toNextStep }: IToNextStep) => {
     return <div className="p-4 text-gray-500">Спочатку оберіть лікаря</div>;
   const {
     data: services,
-    loading,
+    isLoading,
     error,
-  } = useAsync<IServiceWithNumberPrice[]>(
-    () => getDoctorService(selectedDoctor?.id),
-    [selectedDoctor.id],
-  );
+  } = useServicesQuery(selectedDoctor.id);
   useEffect(() => {
     resetSelectedDate();
     resetSelectedSlot();
   }, []);
 
-  if (loading) return <Loader className="justify-self-center" />;
+  if (isLoading) return <Loader className="justify-self-center" />;
   if (error)
-    return <div className="p-4 text-red-600">Ошибка загрузки услуг</div>;
+    return <div className="p-4 text-red-600 text-center">{error.message}</div>;
   if (!services || services.length === 0)
-    return <div className="p-4 text-gray-500">No services</div>;
+    return <div className="p-4 text-gray-500 text-center">No services</div>;
 
   return (
     <form

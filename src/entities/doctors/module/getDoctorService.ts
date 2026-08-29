@@ -1,4 +1,3 @@
-"use server";
 import prisma from "@/src/lib/prisma";
 import { IServiceWithNumberPrice } from "@/types/doctors";
 

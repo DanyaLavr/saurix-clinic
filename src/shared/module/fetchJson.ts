@@ -11,6 +11,5 @@ export async function fetchJson<T>(
   if (!res.ok) {
     throw new Error(`Request failed: ${res.status}`);
   }
-
   return res.json();
 }

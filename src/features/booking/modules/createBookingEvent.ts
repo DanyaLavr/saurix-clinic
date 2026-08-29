@@ -3,7 +3,6 @@ import getDoctorCalendar from "@/src/entities/doctors/module/getDoctorCalendar";
 
 interface IProps {
   doctorId: string;
-  doctorEmail: string;
   patientEmail: string;
   serviceName: string;
   startTime: string;
@@ -11,7 +10,6 @@ interface IProps {
 }
 const createBookingEvent = async ({
   doctorId,
-  doctorEmail,
   patientEmail,
   serviceName,
   startTime,

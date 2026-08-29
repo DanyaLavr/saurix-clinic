@@ -1,7 +1,8 @@
-import getFreeBusy from "@/src/entities/doctors/module/getFreeBusy";
-import generateFreeSlots from "@/src/features/booking/modules/generateFreeSlots";
-import generateSlots from "@/src/features/booking/modules/generateSlots";
-import prisma from "@/src/lib/prisma";
+import {
+  NotFoundError,
+  UpstreamError,
+} from "@/src/features/booking/modules/errorClasses";
+import { getFreeSlots } from "@/src/features/booking/modules/getFreeSlots";
 import { NextResponse } from "next/server";
 
 const CALENDAR_ID =
@@ -27,61 +28,17 @@ export async function GET(req: Request) {
       { status: 400 },
     );
   }
-
-  const service = await prisma.service.findUnique({ where: { id: serviceId } });
-
-  if (!service) {
-    return NextResponse.json(
-      { error: "servise is not found" },
-      { status: 404 },
-    );
-  }
-
-  const [year, dataMonth, day] = date.split("-").map(Number);
-  const month = dataMonth - 1;
-  const dayOfWeek = new Date(year, month, day).getDay();
-  const workSchedule = await prisma.workSchedule.findFirst({
-    where: {
-      doctorId,
-      dayOfWeek,
-    },
-  });
-
-  if (!workSchedule) {
-    return NextResponse.json(
-      { error: "work schedule is not found" },
-      { status: 404 },
-    );
-  }
-  const serviceDuration = service.durationMinutes;
-  const serviceDurationMs = serviceDuration * 60 * 1000;
-  const { startTime, endTime } = workSchedule;
-  const [startHour, startMins] = startTime.split(":").map(Number);
-  const [endHour, endMins] = endTime.split(":").map(Number);
-
-  const workStart = new Date(year, month, day, startHour, startMins);
-  const workEnd = new Date(year, month, day, endHour, endMins);
-
-  let freeBusy;
   try {
-    freeBusy = await getFreeBusy({
-      timeMin: workStart,
-      timeMax: workEnd,
-      doctorId: doctorId,
-    });
-  } catch (err) {
-    console.error("Google Calendar API error:", err);
+    const res = await getFreeSlots({ date, serviceId, doctorId });
+    return NextResponse.json(res);
+  } catch (e) {
+    if (e instanceof NotFoundError)
+      return NextResponse.json({ error: e.message }, { status: 404 });
+    if (e instanceof UpstreamError)
+      return NextResponse.json({ error: e.message }, { status: 502 });
     return NextResponse.json(
-      { error: "failed to fetch calendar data" },
-      { status: 502 },
+      { error: "internal server error" },
+      { status: 500 },
     );
   }
-
-  const busyPeriods = freeBusy ?? [];
-
-  const slots = generateSlots(workStart, workEnd, serviceDurationMs);
-
-  return NextResponse.json(
-    generateFreeSlots({ slots, freebusy: busyPeriods, serviceDurationMs }),
-  );
 }
