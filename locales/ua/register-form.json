@@ -1,0 +1,12 @@
+{
+  "title": "Створіть акаунт",
+  "subtitle": "Це займе менше хвилини — і ви зможете записатися до лікаря",
+  "nameLabel": "Ім'я",
+  "namePlaceholder": "Як до вас звертатися",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Пароль",
+  "passwordPlaceholder": "Мінімум 6 символів",
+  "submit": "Зареєструватися",
+  "submitting": "Реєстрація..."
+}

@@ -1,0 +1,9 @@
+{
+  "title": "З поверненням",
+  "subtitle": "Увійдіть, щоб керувати записами до лікаря",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Пароль",
+  "submit": "Увійти",
+  "submitting": "Вхід..."
+}

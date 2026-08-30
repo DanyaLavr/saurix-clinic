@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authConfig } from "../shared/config/authConfig";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+
 import { ROUTES } from "../shared/config/routes";
 import { LogoutButton } from "../shared/ui/LogoutButton";
 

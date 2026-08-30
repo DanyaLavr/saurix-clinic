@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "title": "Login and registration",
+    "description": "Log in or sign up to book a doctor's appointment online",
+    "login": {
+      "title": "Login"
+    },
+    "register": {
+      "title": "Sign up"
+    }
+  }
+}

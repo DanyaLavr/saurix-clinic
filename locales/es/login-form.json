@@ -1,0 +1,9 @@
+{
+  "title": "Bienvenido de nuevo",
+  "subtitle": "Inicia sesión para gestionar tus citas médicas",
+  "emailLabel": "Correo electrónico",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Contraseña",
+  "submit": "Iniciar sesión",
+  "submitting": "Iniciando sesión..."
+}

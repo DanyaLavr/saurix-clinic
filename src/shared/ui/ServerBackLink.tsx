@@ -1,22 +1,31 @@
-"use server";
-
 import { headers } from "next/headers";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-const ServerBackLink = async () => {
-  const headerList = await headers();
-  const referer = headerList.get("referer");
-  let backUrl = "/";
+const ServerBackLink = async ({
+  searchParams,
+}: {
+  searchParams: { from?: string };
+}) => {
+  const t = await getTranslations("common");
 
-  if (referer) {
-    const url = new URL(referer);
-    if (url.origin === process.env.NEXTAUTH_URL) {
-      backUrl = `${url.pathname}${url.searchParams}${url.hash}`;
+  let backUrl = searchParams?.from;
+
+  if (!backUrl) {
+    const headerList = await headers();
+    const referer = headerList.get("referer");
+
+    if (referer) {
+      const url = new URL(referer);
+      if (url.origin === process.env.NEXTAUTH_URL) {
+        backUrl = `${url.pathname}${url.search}${url.hash}`;
+      }
     }
   }
+
   return (
     <Link
-      href={backUrl}
+      href={backUrl || "/"}
       className="btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm"
     >
       <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -28,7 +37,7 @@ const ServerBackLink = async () => {
           strokeLinejoin="round"
         />
       </svg>
-      Back
+      {t("back")}
     </Link>
   );
 };

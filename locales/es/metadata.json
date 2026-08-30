@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "title": "Iniciar sesión y registro",
+    "description": "Inicia sesión o regístrate para reservar una cita médica en línea",
+    "login": {
+      "title": "Iniciar sesión"
+    },
+    "register": {
+      "title": "Registrarse"
+    }
+  }
+}

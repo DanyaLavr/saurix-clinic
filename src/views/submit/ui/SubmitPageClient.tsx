@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import createBookingEvent from "@/src/features/booking/modules/createBookingEvent";
 import { useSession } from "next-auth/react";
 import SubmitListItem from "./SubmitListItem";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ROUTES } from "@/src/shared/config/routes";
 
 const SubmitPageClient = () => {
@@ -98,7 +98,6 @@ const SubmitPageClient = () => {
       );
       createBookingEvent({
         doctorId: selectedDoctor.id,
-        doctorEmail: "",
         patientEmail,
         serviceName: selectedService.name,
         startTime: start.toISOString(),

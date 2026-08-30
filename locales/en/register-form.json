@@ -1,0 +1,12 @@
+{
+  "title": "Create an account",
+  "subtitle": "It takes less than a minute — and you'll be able to book a doctor",
+  "nameLabel": "Name",
+  "namePlaceholder": "How should we address you",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Minimum 6 characters",
+  "submit": "Sign up",
+  "submitting": "Signing up..."
+}

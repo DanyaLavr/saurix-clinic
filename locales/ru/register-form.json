@@ -1,0 +1,12 @@
+{
+  "title": "Создайте аккаунт",
+  "subtitle": "Это займёт меньше минуты — и вы сможете записаться к врачу",
+  "nameLabel": "Имя",
+  "namePlaceholder": "Как к вам обращаться",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Пароль",
+  "passwordPlaceholder": "Минимум 6 символов",
+  "submit": "Зарегистрироваться",
+  "submitting": "Регистрация..."
+}

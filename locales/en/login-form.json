@@ -1,0 +1,9 @@
+{
+  "title": "Welcome back",
+  "subtitle": "Sign in to manage your appointments",
+  "emailLabel": "Email",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Password",
+  "submit": "Sign in",
+  "submitting": "Signing in..."
+}

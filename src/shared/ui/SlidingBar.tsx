@@ -1,8 +1,8 @@
 "use client";
 
 import { TabContent } from "@/types/auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+import { Link, usePathname } from "@/i18n/navigation";
 interface IProps {
   leftContent: TabContent;
   rightContent: TabContent;

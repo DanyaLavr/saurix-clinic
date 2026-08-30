@@ -10,11 +10,12 @@ import {
   TRegisterInput,
 } from "@/src/shared/config/authSchemas";
 import ShowButton from "@/src/shared/ui/ShowButton";
-
+import { useTranslations } from "next-intl";
 export default function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const t = useTranslations("register-form");
 
   const [serverError, setServerError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -61,12 +62,8 @@ export default function RegisterForm() {
   return (
     <div className="mt-8 flex w-full flex-col gap-6">
       <div>
-        <h1 className="text-xl font-semibold text-stone-900">
-          Создайте аккаунт
-        </h1>
-        <p className="mt-1 text-sm text-stone-500">
-          Это займёт меньше минуты — и вы сможете записаться к врачу
-        </p>
+        <h1 className="text-xl font-semibold text-stone-900">{t("title")}</h1>
+        <p className="mt-1 text-sm text-stone-500">{t("subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -75,13 +72,13 @@ export default function RegisterForm() {
             htmlFor="register-name"
             className="mb-1.5 block text-sm font-medium text-stone-700"
           >
-            Имя
+            {t("nameLabel")}
           </label>
           <input
             {...register("name")}
             id="register-name"
             type="text"
-            placeholder="Как к вам обращаться"
+            placeholder={t("namePlaceholder")}
             className="w-full rounded-lg border border-stone-300 px-4 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
           />
           {errors.name && (
@@ -94,13 +91,13 @@ export default function RegisterForm() {
             htmlFor="register-email"
             className="mb-1.5 block text-sm font-medium text-stone-700"
           >
-            Email
+            {t("emailLabel")}
           </label>
           <input
             {...register("email")}
             id="register-email"
             type="email"
-            placeholder="you@example.com"
+            placeholder={t("emailPlaceholder")}
             className="w-full rounded-lg border border-stone-300 px-4 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
           />
           {errors.email && (
@@ -113,14 +110,14 @@ export default function RegisterForm() {
             htmlFor="register-password"
             className="mb-1.5 block text-sm font-medium text-stone-700"
           >
-            Пароль
+            {t("passwordLabel")}
           </label>
           <div className="relative">
             <input
               {...register("password")}
               id="register-password"
               type={showPassword ? "text" : "password"}
-              placeholder="Минимум 6 символов"
+              placeholder={t("passwordPlaceholder")}
               className="w-full rounded-lg border border-stone-300 px-4 py-2.5 pr-11 text-sm text-stone-900 placeholder:text-stone-400 focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
             />
             <ShowButton isShow={showPassword} set={setShowPassword} />
@@ -139,7 +136,7 @@ export default function RegisterForm() {
           disabled={isSubmitting}
           className="btn-primary mt-2 rounded-lg px-4 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isSubmitting ? "Регистрация..." : "Зарегистрироваться"}
+          {isSubmitting ? t("submitting") : t("submit")}
         </button>
       </form>
     </div>

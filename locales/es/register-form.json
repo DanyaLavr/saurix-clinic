@@ -1,0 +1,12 @@
+{
+  "title": "Crea una cuenta",
+  "subtitle": "Toma menos de un minuto — y podrás reservar una cita con el médico",
+  "nameLabel": "Nombre",
+  "namePlaceholder": "¿Cómo quieres que te llamemos?",
+  "emailLabel": "Correo electrónico",
+  "emailPlaceholder": "you@example.com",
+  "passwordLabel": "Contraseña",
+  "passwordPlaceholder": "Mínimo 6 caracteres",
+  "submit": "Registrarse",
+  "submitting": "Registrando..."
+}
