@@ -1,24 +1,25 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { IToNextStep } from "../types/props";
+import { useEffect, useState } from "react";
 import useBookingStore from "../store/store";
 import DateCalendar from "./DateCalendar";
 import TimeSlotPicker from "./TimeSlotPicker";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/src/shared/config/routes";
-import Arrow from "@/src/shared/ui/icons/chevron.svg";
-const daysNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+import WeekDaysList from "./WeekDaysList";
+import MonthPicker from "./MonthPicker";
+import isPrevMonthDisabled from "../modules/isPrevMonthDisabled";
 
-const SelectDate = ({ toNextStep }: IToNextStep) => {
+const SelectDate = () => {
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(today);
-  const selectedDoctor = useBookingStore((state) => state.selectedDoctor);
   const selectedDate = useBookingStore((state) => state.selectedDate);
   const selectedSlot = useBookingStore((state) => state.selectedSlot);
-  const selectedService = useBookingStore((state) => state.selectedService);
 
   const router = useRouter();
+
+  const month = currentDate.getMonth();
+  const year = currentDate.getFullYear();
 
   const prevMonth = () => {
     setCurrentDate((d) => new Date(d.getFullYear(), d.getMonth() - 1));
@@ -27,16 +28,6 @@ const SelectDate = ({ toNextStep }: IToNextStep) => {
   const nextMonth = () => {
     setCurrentDate((d) => new Date(d.getFullYear(), d.getMonth() + 1));
   };
-  const month = currentDate.getMonth();
-  const year = currentDate.getFullYear();
-  const monthName = currentDate.toLocaleString("default", { month: "long" });
-
-  const isPrevDisabled = useMemo(() => {
-    return (
-      year < today.getFullYear() ||
-      (year === today.getFullYear() && month <= today.getMonth())
-    );
-  }, [year, month, today]);
 
   //TODO
   //* Авто блокировка дат, если там нет слотов
@@ -57,32 +48,16 @@ const SelectDate = ({ toNextStep }: IToNextStep) => {
   // }, [currentDate]);
   return (
     <div className="mt-8">
-      <div className="flex items-center gap-4 sm:w-[49%]">
-        <button
-          className="btn-ghost rounded-lg px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-20"
-          onClick={prevMonth}
-          disabled={isPrevDisabled}
-        >
-          <Arrow className="rotate-180" />
-        </button>
-        <p className="flex-1 text-center capitalize ">
-          {monthName} - {year}
-        </p>
-        <button
-          onClick={nextMonth}
-          className="btn-ghost rounded-lg px-2.5 py-1.5"
-        >
-          <Arrow />
-        </button>
-      </div>
+      <MonthPicker
+        currentDate={currentDate}
+        isPrevDisabled={isPrevMonthDisabled(year, month, today)}
+        prevMonth={prevMonth}
+        nextMonth={nextMonth}
+      />
 
       <div className="grid gap-4 mt-3 sm:flex">
         <div className="flex-1">
-          <div className="grid grid-cols-7 justify-items-center">
-            {daysNames.map((elem, index) => (
-              <div key={index}>{elem}</div>
-            ))}
-          </div>
+          <WeekDaysList />
           <DateCalendar today={today} month={month} year={year} />
         </div>
         <span className="block w-full h-0.5 bg-amber-600 sm:hidden"></span>

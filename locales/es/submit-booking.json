@@ -1,0 +1,17 @@
+{
+  "error": {
+    "title": "No se pudo abrir la reserva",
+    "description": "Para ver los detalles de la reserva es necesario iniciar sesión. Es posible que tu sesión haya expirado o que los datos del usuario no estén disponibles.",
+    "loginButton": "Iniciar sesión",
+    "footer": "Después de iniciar sesión podrás volver a los detalles de la reserva."
+  },
+  "booking": {
+    "title": "Detalles de la reserva",
+    "doctor": "Médico",
+    "service": "Servicio",
+    "date": "Fecha",
+    "time": "Hora",
+    "totalToPay": "Total a pagar",
+    "submitButton": "Confirmar"
+  }
+}

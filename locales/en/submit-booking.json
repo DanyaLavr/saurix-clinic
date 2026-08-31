@@ -1,0 +1,17 @@
+{
+  "error": {
+    "title": "Unable to open booking",
+    "description": "You need to sign in to view the booking details. Your session may have expired or the user data is unavailable.",
+    "loginButton": "Sign in",
+    "footer": "After signing in, you'll be able to return to the booking details."
+  },
+  "booking": {
+    "title": "Details of booking",
+    "doctor": "Doctor",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time",
+    "totalToPay": "Total to pay",
+    "submitButton": "Submit"
+  }
+}

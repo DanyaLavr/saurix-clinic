@@ -4,6 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import useBookingStore from "../store/store";
 import getDoctorWorkSchedule from "@/src/entities/doctors/module/getDoctorWorkSchedule";
 import DateItem from "./DateItem";
+import {
+  isDayOff,
+  isCurrentDay,
+  isNotAvailable,
+  getFirstDayOfMonth,
+} from "../modules/date-calendar";
+import { WorkSchedule } from "@/app/generated/prisma/client";
 
 const daysInMonth = (year: number, month: number) =>
   new Date(year, month + 1, 0).getDate();
@@ -14,39 +21,25 @@ interface IProps {
   year: number;
 }
 const DateCalendar = ({ today, month, year }: IProps) => {
-  const [workSchedule, setWorkSchedule] = useState<any>();
+  const [workSchedule, setWorkSchedule] = useState<WorkSchedule[]>();
   const selectedDate = useBookingStore((state) => state.selectedDate);
   const selectedDoctor = useBookingStore((state) => state.selectedDoctor);
   const setSelectedDate = useBookingStore((state) => state.setSelectedDate);
   const resetSelectedSlot = useBookingStore((state) => state.resetSelectedSlot);
-  const isCurrentDay = (calendarDay: string): boolean => {
-    return (
-      `${year}-${String(month + 1).padStart(2, "0")}-${String(calendarDay).padStart(2, "0")}` ===
-      selectedDate
-    );
-  };
-  const isDayOff = (day: number): boolean => {
-    if (!workSchedule) return false;
-    const weekday = new Date(year, month, day).getDay();
-    return !workSchedule.some((elem: any) => elem.dayOfWeek === weekday);
-  };
+
   const minBookableDate = useMemo(() => {
     const date = new Date(today);
     date.setDate(date.getDate() + 1);
     return date;
   }, [today]);
 
-  const isNotAvailable = (day: number): boolean => {
-    const date = new Date(year, month, day);
-    return date < minBookableDate;
-  };
-  const firstDay = (new Date(year, month).getDay() + 6) % 7;
+  const firstDay = getFirstDayOfMonth(year, month);
   const calendarDays = useMemo(
     () => [
       ...Array(firstDay).fill(null),
       ...Array.from({ length: daysInMonth(year, month) }, (_, i) => i + 1),
     ],
-    [month],
+    [firstDay, year, month],
   );
 
   useEffect(() => {
@@ -61,8 +54,11 @@ const DateCalendar = ({ today, month, year }: IProps) => {
         elem ? (
           <DateItem
             key={`${year}-${String(month + 1).padStart(2, "0")}-${String(elem).padStart(2, "0")}`}
-            isDisabled={isDayOff(elem) || isNotAvailable(elem)}
-            isCurrentDay={isCurrentDay(elem)}
+            isDisabled={
+              isDayOff(year, month, elem, workSchedule) ||
+              isNotAvailable(year, month, elem, minBookableDate)
+            }
+            isCurrentDay={isCurrentDay(year, month, elem, selectedDate)}
             date={elem}
             setSelectedDate={() => {
               resetSelectedSlot();

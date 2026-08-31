@@ -44,7 +44,7 @@ const BookingPageClient = ({ initialDoctors }: IProps) => {
             />
           )}
           {step === 1 && <SelectService toNextStep={() => setStep(2)} />}
-          {step === 2 && <SelectDate toNextStep={() => setStep(3)} />}
+          {step === 2 && <SelectDate />}
         </div>
       </section>
     </main>

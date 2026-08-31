@@ -4,10 +4,11 @@ import { Link } from "@/i18n/navigation";
 
 import { ROUTES } from "../shared/config/routes";
 import { LogoutButton } from "../shared/ui/LogoutButton";
+import { getTranslations } from "next-intl/server";
 
 const Header = async () => {
   const session = await getServerSession(authConfig);
-
+  const t = await getTranslations("header");
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
@@ -43,7 +44,7 @@ const Header = async () => {
               href={ROUTES.login}
               className="hidden text-sm font-medium text-stone-600 transition-colors hover:text-stone-900 sm:inline"
             >
-              Войти
+              {t("login")}
             </Link>
           )}
 
@@ -51,7 +52,7 @@ const Header = async () => {
             href={ROUTES.booking}
             className="btn-primary inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm"
           >
-            Записаться
+            {t("bookAppointment")}
           </Link>
         </div>
       </div>

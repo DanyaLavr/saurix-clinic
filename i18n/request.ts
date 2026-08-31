@@ -8,6 +8,8 @@ const namespaces = [
   "register-form",
   "metadata",
   "common",
+  "submit-booking",
+  "header",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {
