@@ -9,7 +9,7 @@ const ServerBackLink = async () => {
   if (referer) {
     const url = new URL(referer);
     if (url.origin === process.env.NEXTAUTH_URL) {
-      backUrl = `${url.pathname}${url.searchParams}${url.hash}`;
+      backUrl = `${url.pathname}${url.search}${url.hash}`;
     }
   }
   return (
