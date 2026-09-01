@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+html {
+  scroll-behavior: auto;
+}
 @layer components {
   /* Заполненная кнопка — только цвет/состояния, паддинги/rounded/gap пишешь сам */
   .btn-primary {

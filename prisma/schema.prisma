@@ -13,6 +13,13 @@ enum Role {
   PATIENT
 }
 
+enum Locale {
+  ES
+  EN
+  UK
+  RU
+}
+
 model Doctor {
   id        String   @id @default(uuid())
   name      String
@@ -46,8 +53,22 @@ model Service {
   price           Decimal @db.Decimal(10, 2)
   isActive        Boolean @default(true)
 
-  doctors  DoctorService[]
-  bookings Booking[]
+  translations ServiceTranslation[]
+  doctors      DoctorService[]
+  bookings     Booking[]
+}
+
+model ServiceTranslation {
+  id        String @id @default(uuid())
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  locale      Locale
+  name        String
+  description String?
+
+  @@unique([serviceId, locale])
+  @@index([locale])
 }
 
 model DoctorService {
@@ -81,15 +102,15 @@ model Patient {
 }
 
 model Booking {
-  id            String        @id @default(uuid())
-  doctorId      String
-  serviceId     String
-  patientId     String
-  startsAt      DateTime
-  endsAt        DateTime
-  status        BookingStatus @default(CONFIRMED)
-  notes         String?
-  createdAt     DateTime      @default(now())
+  id        String        @id @default(uuid())
+  doctorId  String
+  serviceId String
+  patientId String
+  startsAt  DateTime
+  endsAt    DateTime
+  status    BookingStatus @default(CONFIRMED)
+  notes     String?
+  createdAt DateTime      @default(now())
 
   doctor  Doctor  @relation(fields: [doctorId], references: [id])
   service Service @relation(fields: [serviceId], references: [id])
@@ -102,9 +123,7 @@ enum BookingStatus {
   PENDING
   CONFIRMED
   CANCELLED
-  
 }
-
 
 model Notification {
   id        String    @id @default(uuid())

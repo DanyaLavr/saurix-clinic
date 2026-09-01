@@ -15,7 +15,7 @@ const useFreeSlotsQuery = ({
         `/api/get-doctor-day-slots?date=${date}&serviceId=${serviceId}&doctorId=${doctorId}`,
         signal,
       ),
-    enabled: !!date || !!serviceId || !!doctorId,
+    enabled: !!date && !!serviceId && !!doctorId,
   });
 };
 

@@ -8,6 +8,7 @@ const getDoctorService = async (
     where: { doctorId },
     include: {
       service: true,
+      // translations: true,
     },
   });
   return result.map((ds) => ({
